@@ -8,10 +8,10 @@ use App\Http\Requests\AskQuestionRequest;
 
 class QuestionsController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth', ['except' => 'index','show' ]);
-    }
+    // public function __construct()
+    // {
+    //     $this->middleware('auth', ['except' => 'index','show' ]);
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -22,8 +22,7 @@ class QuestionsController extends Controller
 
         $questions = Question::with('user')->latest()->paginate(10);
 
-        return view ('questions.index', compact('questions'));
-
+        return view('questions.index', compact('questions'));
     }
 
     /**
@@ -59,9 +58,9 @@ class QuestionsController extends Controller
      */
     public function show(Question $question)
     {
-           $question->increment('views');
+        $question->increment('views');
 
-           return view('questions.show',compact('question'));
+        return view('questions.show', compact('question'));
     }
 
     /**
@@ -80,8 +79,7 @@ class QuestionsController extends Controller
         // abort(403, 'Access denied');
 
         $this->authorize('update', $question);
-        return view("questions.edit",compact('question'));
-
+        return view("questions.edit", compact('question'));
     }
 
     /**
@@ -95,7 +93,7 @@ class QuestionsController extends Controller
     {
         $this->authorize('update', $question);
 
-        $question->update($request->only('title','body'));
+        $question->update($request->only('title', 'body'));
 
         return redirect('/questions')->with('success', 'Your Question Has Been Updated');
     }
@@ -112,6 +110,6 @@ class QuestionsController extends Controller
 
         $question->delete();
 
-        return redirect('/questions')->with('success','Your Questions Has Been Deleted.');
+        return redirect('/questions')->with('success', 'Your Questions Has Been Deleted.');
     }
 }
