@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -15,7 +14,7 @@
     </div>
                 <div class="card-body">
                 <form action="{{ route('questions.store') }}" method="post">
-            @include('questions._form', ['buttonText' => 'Ask Questions'])
+                    @include('questions._form', ['buttonText' => 'Ask Questions'])
                 </form>
 
                 </div>
