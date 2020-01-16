@@ -1,4 +1,18 @@
+import Vote from "../components/Vote.vue";
+import UserInfo from "../components/UserInfo.vue";
+import MEditor from "../components/MEditor.vue";
+import highlight from './highlights';
+
 export default {
+
+    mixins: [highlight],
+
+    components: {
+        Vote,
+        UserInfo,
+        MEditor
+    },
+
     data() {
         return {
             editing: false
@@ -37,7 +51,9 @@ export default {
                         timeout: 300
                     });
                     this.editing = false;
-                });
+                })
+                .then(() => this.highlight());
+
         },
 
         payload() {},

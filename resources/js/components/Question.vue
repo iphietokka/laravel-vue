@@ -18,7 +18,7 @@
                     <div class="media">
                         <div class="media-body">
                             <div class="form-group">
-                                <m-editor :body="body">
+                                <m-editor :body="body" :name="uniqueName">
                                     <textarea
                                         rows="10"
                                         v-model="body"
@@ -100,18 +100,12 @@
 </template>
 
 <script>
-import Vote from "./Vote.vue";
-import UserInfo from "./UserInfo.vue";
 import modification from "../mixins/modification";
-import Prism from "prismjs";
-import MEditor from "./MEditor.vue";
 
 export default {
     props: ["question"],
 
     mixins: [modification],
-
-    components: { Vote, UserInfo, MEditor },
 
     data() {
         return {
@@ -130,6 +124,10 @@ export default {
 
         endpoint() {
             return `/questions/${this.id}`;
+        },
+
+        uniqueName() {
+            return `question-${this.id}`;
         }
     },
 
@@ -144,8 +142,6 @@ export default {
         restoreFromCache() {
             this.body = this.beforeEditCache.body;
             this.title = this.beforeEditCache.title;
-            const el = this.$refs.bodyHtml;
-            if (el) Prism.highlightAllUnder(el);
         },
 
         payload() {
