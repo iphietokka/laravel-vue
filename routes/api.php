@@ -15,6 +15,10 @@ use Illuminate\Http\Request;
 
 Route::post('/token', 'Auth\LoginController@getToken');
 Route::get('/questions', 'Api\QuestionController@index');
+Route::middleware(['auth:api'])->group(function () {
+    Route::apiResource('/questions', 'Api\QuestionController')->except('index');
+});
+
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
