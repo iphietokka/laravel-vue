@@ -1,8 +1,8 @@
-import Prism from "prismjs";
+import Prism from 'prismjs';
 
 export default {
     methods: {
-        highlight() {
+        highlight(id = "") {
             let el;
             if (!id) {
                 el = this.$refs.bodyHtml;

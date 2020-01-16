@@ -33,18 +33,19 @@
 <script>
 import Answer from "./Answer.vue";
 import NewAnswer from "./NewAnswer.vue";
-import highlight from "../mixins/highlights";
+import highlight from "../mixins/highlight";
 
 export default {
     props: ["question"],
 
-    mixins: { highlight },
+    mixins: [highlight],
 
     data() {
         return {
             questionId: this.question.id,
             count: this.question.answers_count,
             answers: [],
+            answerId: [],
             nextUrl: null
         };
     },
@@ -68,10 +69,19 @@ export default {
         },
 
         fetch(endpoint) {
-            axios.get(endpoint).then(({ data }) => {
-                this.answers.push(...data.data);
-                this.nextUrl = data.next_page_url;
-            });
+            this.answerId = [];
+            axios
+                .get(endpoint)
+                .then(({ data }) => {
+                    this.answerId = data.data.map(a => a.id);
+                    this.answers.push(...data.data);
+                    this.nextUrl = data.next_page_url;
+                })
+                .then(() => {
+                    this.answerId.forEach(id => {
+                        this.highlight(`answer-${id}`);
+                    });
+                });
         }
     },
 

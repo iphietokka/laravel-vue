@@ -13980,7 +13980,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Answer_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Answer.vue */ "./resources/js/components/Answer.vue");
 /* harmony import */ var _NewAnswer_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./NewAnswer.vue */ "./resources/js/components/NewAnswer.vue");
-/* harmony import */ var _mixins_highlights__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/highlights */ "./resources/js/mixins/highlights.js");
+/* harmony import */ var _mixins_highlight__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../mixins/highlight */ "./resources/js/mixins/highlight.js");
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
 function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance"); }
@@ -14026,14 +14026,13 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["question"],
-  mixins: {
-    highlight: _mixins_highlights__WEBPACK_IMPORTED_MODULE_2__["default"]
-  },
+  mixins: [_mixins_highlight__WEBPACK_IMPORTED_MODULE_2__["default"]],
   data: function data() {
     return {
       questionId: this.question.id,
       count: this.question.answers_count,
       answers: [],
+      answerId: [],
       nextUrl: null
     };
   },
@@ -14057,14 +14056,22 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
     fetch: function fetch(endpoint) {
       var _this2 = this;
 
+      this.answerId = [];
       axios.get(endpoint).then(function (_ref) {
         var _this2$answers;
 
         var data = _ref.data;
+        _this2.answerId = data.data.map(function (a) {
+          return a.id;
+        });
 
         (_this2$answers = _this2.answers).push.apply(_this2$answers, _toConsumableArray(data.data));
 
         _this2.nextUrl = data.next_page_url;
+      }).then(function () {
+        _this2.answerId.forEach(function (id) {
+          _this2.highlight("answer-".concat(id));
+        });
       });
     }
   },
@@ -80512,10 +80519,10 @@ _fortawesome_fontawesome_svg_core__WEBPACK_IMPORTED_MODULE_1__["dom"].watch();
 
 /***/ }),
 
-/***/ "./resources/js/mixins/highlights.js":
-/*!*******************************************!*\
-  !*** ./resources/js/mixins/highlights.js ***!
-  \*******************************************/
+/***/ "./resources/js/mixins/highlight.js":
+/*!******************************************!*\
+  !*** ./resources/js/mixins/highlight.js ***!
+  \******************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -80527,6 +80534,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   methods: {
     highlight: function highlight() {
+      var id = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : "";
       var el;
 
       if (!id) {
@@ -80555,13 +80563,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_Vote_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../components/Vote.vue */ "./resources/js/components/Vote.vue");
 /* harmony import */ var _components_UserInfo_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../components/UserInfo.vue */ "./resources/js/components/UserInfo.vue");
 /* harmony import */ var _components_MEditor_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../components/MEditor.vue */ "./resources/js/components/MEditor.vue");
-/* harmony import */ var _highlights__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./highlights */ "./resources/js/mixins/highlights.js");
+/* harmony import */ var _highlight__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./highlight */ "./resources/js/mixins/highlight.js");
 
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mixins: [_highlights__WEBPACK_IMPORTED_MODULE_3__["default"]],
+  mixins: [_highlight__WEBPACK_IMPORTED_MODULE_3__["default"]],
   components: {
     Vote: _components_Vote_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
     UserInfo: _components_UserInfo_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
