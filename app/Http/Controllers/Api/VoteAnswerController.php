@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Answer;
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
 class VoteAnswerController extends Controller

@@ -23,6 +23,10 @@ Route::middleware(['auth:api'])->group(function () {
 
     Route::post('/questions/{question}/vote', 'VoteQuestionController');
     Route::post('/answers/{answer}/vote', 'VoteAnswerController');
+
+    Route::post('/answers/{answer}/accept', 'Api\AcceptAnswerController');
+    Route::post('/questions/{question}/favorites', 'Api\FavoritesController@store');
+    Route::delete('/questions/{question}/favorites', 'Api\FavoritesController@destroy');
 });
 
 
