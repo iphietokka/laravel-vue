@@ -15,12 +15,14 @@
                             </div>
                         </div>
                     </div>
+
                     <questions></questions>
                 </div>
             </div>
         </div>
     </div>
 </template>
+
 <script>
 import Questions from "../components/Questions.vue";
 export default {
