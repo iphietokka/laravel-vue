@@ -7,10 +7,10 @@
             </div>
             <div :class="statusClasses">
                 <strong>{{ question.answers_count }}</strong>
-                {{ str_plural("status", question.answers_count) }}
+                {{ str_plural("answer", question.answers_count) }}
             </div>
             <div class="view">
-                {{ question.views + "" + str_plural("view", question.views) }}
+                {{ question.views + " " + str_plural("view", question.views) }}
             </div>
         </div>
         <div class="media-body">
@@ -28,23 +28,15 @@
                         class="btn btn-sm btn-outline-info"
                         >Edit</router-link
                     >
-                    <form
+                    <button
                         v-if="authorize('deleteQuestion', question)"
-                        class="form-delete"
-                        action="#"
-                        method="post"
+                        class="btn btn-sm btn-outline-danger"
+                        @click="destroy"
                     >
-                        <button
-                            type="submit"
-                            class="btn btn-sm btn-outline-danger"
-                            onclick="return confirm('are you sure ?')"
-                        >
-                            Delete
-                        </button>
-                    </form>
+                        Delete
+                    </button>
                 </div>
             </div>
-
             <p class="lead">
                 Asked by
                 <a href="#">{{ question.user.name }}</a>
@@ -56,15 +48,23 @@
 </template>
 
 <script>
+import destroy from "../mixins/destroy";
 export default {
+    mixins: [destroy],
     props: ["question"],
-
     methods: {
         str_plural(str, count) {
             return str + (count > 1 ? "s" : "");
+        },
+        delete() {
+            axios.delete(`/questions/${this.question.id}`).then(res => {
+                this.$toast.success(res.data.message, "Success", {
+                    timeout: 2000
+                });
+                this.$emit("deleted");
+            });
         }
     },
-
     computed: {
         statusClasses() {
             return ["status", this.question.status];
