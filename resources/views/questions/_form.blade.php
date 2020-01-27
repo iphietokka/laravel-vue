@@ -1,4 +1,3 @@
-
 @csrf
 <div class="form-group">
     <label for="question-title">Question Title</label>
