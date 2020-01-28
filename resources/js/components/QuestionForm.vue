@@ -30,8 +30,13 @@
         </div>
 
         <div class="form-group">
-            <button type="submit" class="btn-outline-primary btn-lg">
-                {{ buttonText }}
+            <button type="submit" class="btn btn-outline-primary btn-lg">
+                <spinner
+                    :small="true"
+                    :min-width="59.22"
+                    v-if="$root.loading"
+                ></spinner>
+                <span v-else>{{ buttonText }}</span>
             </button>
         </div>
     </form>

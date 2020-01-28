@@ -9,7 +9,7 @@
                             <div class="ml-auto">
                                 <router-link
                                     :to="{ name: 'questions' }"
-                                    class="btn btn-outline-secodary"
+                                    class="btn btn-outline-secondary"
                                     >Back to all Questions</router-link
                                 >
                             </div>
